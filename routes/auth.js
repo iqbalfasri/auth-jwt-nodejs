@@ -28,10 +28,11 @@ router.get("/me", (req, res) => {
   // Verify jwt / token
   jwt.verify(bearerToken, "secretkey", (err, authData) => {
     // Jika token salah
-    if (err) return res.status(403).send({
-      name: err.name,
-      message: "Token salah"
-    });
+    if (err)
+      return res.status(403).send({
+        name: err.name,
+        message: "Token salah"
+      });
     // Jika token bener
     res.status(200).send({
       auth: true,
