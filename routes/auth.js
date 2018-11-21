@@ -10,6 +10,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/me", (req, res) => {
+
   /*
    *   Format Token
    *   x-access-token: Bearer <access_token>
@@ -43,15 +44,24 @@ router.get("/me", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
+  const { username, email } = req.body;
+
   // Dummy User
   const user = {
-    id: 1,
-    username: "iqbalfasri",
-    email: "iqbalx64@gmail.com"
+    id: Math.floor(Math.random() * 1000),
+    username: username,
+    email: email
   };
 
+  // Cek jika body kosong
+  if (username === undefined && email === undefined) {
+    return res.send({
+      message: "Username atau Email tidak boleh kosong bosque"
+    });
+  }
+
   jwt.sign({ user }, "secretkey", (err, token) => {
-    res.json({
+    res.send({
       auth: true,
       token: token
     });
